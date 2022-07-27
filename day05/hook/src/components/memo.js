@@ -15,6 +15,7 @@ const Memo = () => {
       즉 해당 값이 의존성 배열에 있는 값이 바뀌어야만 랜더링 시 재호출되기 떄문에
       [메모이제이션]을 실현 할수있다
     */
+
   const onChangeColor = () => {
     if (color === "red") {
       setColor("blue");
