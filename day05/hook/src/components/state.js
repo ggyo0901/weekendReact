@@ -1,17 +1,16 @@
-import {useState} from "react";
+import { useRef, useState } from "react";
 import AddState from "./addState";
-
 const State = () => {
-    const[state, setState] = useState("state 처음 시작")
-    // const[변수명, 변수 값을 바꿔줄 함수명] = useState(변수의 기본값)
-    // setState("값") ----> 변수의 값이 바뀜
+  //   const [state, setState] = useState("state 처음 시작");
+  // const[변수명, 변수 값을 바꿔줄 함수명] = useState(변수의 기본값)
+  // setState("값") ----> 변수의 값이 바뀜
 
-    // const onChangeText = () =>{
-    //     setState("두번째 시작하는 state");
-    // }
+  // const onChangeText = () =>{
+  //     setState("두번째 시작하는 state");
+  // }
 
-    // staet의 불변성 (state의 값이 객체일 때)
-    /* 
+  // staet의 불변성 (state의 값이 객체일 때)
+  /* 
         const obj = {1}
         const ob2 = {}
 
@@ -55,29 +54,28 @@ const State = () => {
     
 
         */
-    
-          //변수명    //변수를 바꾸는 함수명
-    const [userList, setUserList] = useState([
-        {
-            id:1,
-            name: "김성용"
-        },
-        {
-            id:2,
-            name: "김사과"
-        },
-        {
-            id:3,
-            name: "김예찬"
-        },
-    ])
 
-    const onClickEvent = (idValue, nameValue) => {
-        setUserList([...userList, {id: idValue, name: nameValue}])
-    }
+  //변수명    //변수를 바꾸는 함수명
+  const [userList, setUserList] = useState([
+    {
+      id: 1,
+      name: "김성용",
+    },
+    {
+      id: 2,
+      name: "김사과",
+    },
+    {
+      id: 3,
+      name: "김예찬",
+    },
+  ]);
 
+  const onClickEvent = (idValue, nameValue) => {
+    setUserList([...userList, { id: idValue, name: nameValue }]);
+  };
 
-    /*
+  /*
         ***
         백엔드 받아오는 데이터의 형식의 대부분은 배열인 경우가 많습니다
         따라서 이러한 배열들을 화면에 보여주기 위해 사용하는 함수
@@ -118,15 +116,14 @@ const State = () => {
 
 
         3. filter
-            [거름망, 조건에 맞는 데이터를 제외하는 읽어오는 것]
-            => 삭제 시에 백엔드에서 받아온 데이터가 있음.
+            [거름망, 조건에 맞지 않는 데이터를 제외하고  조건에 맞는 데이터만 읽어오는 것]
+            => 주로 백엔드 데이터가 삭제되었을 떄 프론트 엔드에서도 삭제하기 위해 사용
 
             ex)
             배열명.filter((결과값 변수명) => 조건식 )
     */
 
-
-    /*
+  /*
         ex) 상품정보에 대한 데이터
 
         {
@@ -162,22 +159,48 @@ const State = () => {
             }
         }
     */
-
-
-        
-    return(
-        <>
-            {userList.map((item)=> (
-                <div>
-                    {item.id}. {item.name}
-                    <button>삭제</button>
-                </div>
-            ))}
-            <AddState 
-                onClickEvent={onClickEvent}
-                stateId={ userList.length > 0 && userList[userList.length-1].id}
-            />
-        </>
+  const onRemoveHandler = (e) => {
+    console.log(typeof e.target.value); //e.target.value가 string이기떄문에 조건식에안맞아서 삭제가안됨 그러기떄문에 e.target.value를 paseInt로 묶어서 강제형변환시킴
+    //오류가나면 type도찾아볼것
+    const removeState = userList.filter(
+      (item) => item.id !== parseInt(e.target.value)
     );
+    //filter는 제거하라는 명령문이 아니라 해당 상태가 맞지않는 데이터를 제외하고
+    //읽어오는 것이므로 원본데이터를 훼손한 상태가 아니다.
+    setUserList(removeState);
+  };
+  const removeButtonArr = useRef([]);
+  const RemoveHandler2 = () => {
+    console.log(removeButtonArr);
+  };
+  const RemoveHandler3 = (itemId) => {
+    console.log(itemId);
+    const removeState = userList.filter((item) => item.id !== itemId.id);
+    setUserList(removeState);
+  };
+  return (
+    <>
+      {userList.map((item, index) => (
+        <div>
+          {item.id}. {item.name}
+          <button
+            value={item.id} //value는 string으로반환
+            //map의 안에서 매개변수로 전달을 하게되면 해당객체에 해당하는 모든 정보를
+            //매게변수로 전달받을수있다
+            onClick={() => {
+              RemoveHandler3(item);
+            }}
+            ref={(el) => (removeButtonArr[item.id] = el)} // 배열로 값을 넣는방법 //배열로 여러가지를 가지고올수있다 allselector같은
+          >
+            삭제
+          </button>
+        </div>
+      ))}
+      <AddState
+        onClickEvent={onClickEvent}
+        stateId={userList.length > 0 && userList[userList.length - 1].id}
+      />
+    </>
+  );
 };
 export default State;

@@ -1,8 +1,12 @@
 import State from "../components/state";
+import Memo from "../components/memo";
 
 const Hook = () => {
-    return (
-        <State/>
-    );
-}
-export default Hook
+  return (
+    <>
+      <State />
+      <Memo />
+    </>
+  );
+};
+export default Hook;
