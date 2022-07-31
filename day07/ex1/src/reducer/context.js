@@ -17,7 +17,8 @@ const initialState = [
     name: "met",
   },
 ];
-
+export const REMOVE_STATE = "REMOVE_STATE";
+export const ADD_STATE = "ADD_STATE";
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_STATE":

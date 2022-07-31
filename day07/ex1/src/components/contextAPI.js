@@ -1,28 +1,25 @@
 import AddState from "./addState";
 import { useContext, useEffect, useCallback } from "react";
-import { Context } from "../reducer/context";
+import { Context, REMOVE_STATE } from "../reducer/context";
 const ContextAPI = () => {
   const { state, dispatch } = useContext(Context);
   useEffect(() => {
     console.log(state);
   }, [state]);
-  const onRemove = useCallback(() => {
+  const onRemove = useCallback((id) => {
     dispatch({
-      type: "REMOVE_STATE",
+      type: REMOVE_STATE,
+      id: id,
     });
-  });
+  }, []);
 
   return (
     <>
-      <AddState
-        state={state}
-        dispatch={dispatch}
-        stateId={state.length > 0 && state[state.length - 1].id}
-      />
+      <AddState />
       {state.map((v) => (
-        <div>
+        <div key={v.id}>
           {v.id}.{v.name}
-          <button onClick={onRemove}>삭제</button>
+          <button onClick={() => onRemove(v.id)}>삭제</button>
         </div>
       ))}
     </>
