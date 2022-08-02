@@ -25,7 +25,7 @@ const TodoForm = () => {
       },
     });
     setTodo("");
-  }, []);
+  }, [state, todo, dispatch]);
   const onChangeTodo = useCallback(
     (e) => {
       setTodo(e.target.value);

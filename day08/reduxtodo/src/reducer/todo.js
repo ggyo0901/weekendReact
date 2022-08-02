@@ -16,7 +16,7 @@ const todo = (state = initialState, action) => {
     case INSERT_TODO:
       return [...state, { id: action.data.id, todo: action.data.todo }];
     case DELETE_TODO:
-      return state.filter((item) => item.id !== action.data.id);
+      return state.filter((item) => item.id !== action.id);
     default:
       return state;
   }
