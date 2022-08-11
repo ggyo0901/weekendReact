@@ -21,6 +21,6 @@ const PostDesc = styled.article`
   width: 100%;
   border: 1px solid var(--myblog--main--color);
   border-radius: 0.5rem;
-  margin: 1rem 0;
+  margin: 1rem;
   padding: 1rem;
 `;
