@@ -7,7 +7,7 @@ const MyblogLayout = ({ children }) => {
     <>
       <LayOutHeader />
       {children}
-      <Post />
+
       <LayOutFooter />
     </>
   );

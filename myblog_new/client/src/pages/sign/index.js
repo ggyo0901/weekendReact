@@ -1,4 +1,6 @@
+import Sign_Form from "../../components/sign_cp/signForm";
+
 const Sign = () => {
-  return <>회원가입</>;
+  return <Sign_Form />;
 };
 export default Sign;
