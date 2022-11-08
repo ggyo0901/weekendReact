@@ -52,7 +52,7 @@ const ChatPage = () => {
       try {
         await socket.emit("roomchat", {
           username: name,
-          maessage: chatText,
+          message: chatText,
         });
 
         setChatting([

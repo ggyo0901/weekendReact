@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { INSERT_TODO } from "../reducer/todo";
+import { addtodo } from "../reducer/todo";
 
 const TodoForm = () => {
   const [todo, setTodo] = useState("");
 
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.todo);
+  const { todos } = useSelector((state) => state.todo);
   //리듀서에있는것을 state를다가져온다 그중에 todo를불러온다
   /*
   rootReducer 설정 (reducer 들을 combine(합친)한다)
@@ -18,20 +18,14 @@ const TodoForm = () => {
    */
   const onAddState = useCallback(() => {
     let lastId;
-    if (state.length > 0) {
-      lastId = state[state.length - 1].id;
+    if (todos.length > 0) {
+      lastId = todos[0].id;
     } else {
       lastId = 0;
     }
-    dispatch({
-      type: INSERT_TODO,
-      data: {
-        id: lastId + 1,
-        todo: todo,
-      },
-    });
+    dispatch(addtodo({ id: lastId + 1, todo: todo }));
     setTodo("");
-  }, [state, todo, dispatch]);
+  }, [todos, todo, dispatch]);
   const onChangeTodo = useCallback(
     (e) => {
       setTodo(e.target.value);

@@ -19,3 +19,8 @@ npm i react-redux redux redux-devtools-extension
 띄어쓰기를하면 3가지를 한번에 설치가능
 
 -------------------------------------------------------------------
+useReducer :
+     state 업데이트 로직을 컴포넌트에서 따로 분리
+
+useContext:
+    state를 전역으로 관리히여 모든 컴포넌트에서 사용할 수있도록 분리
