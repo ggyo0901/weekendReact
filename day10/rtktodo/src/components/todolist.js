@@ -33,7 +33,7 @@ const TodoList = ({ todos }) => {
       ) : (
         <div key={todos.id}>{todos.todo}</div>
       )}
-      <button onClick={onRemoveClick}>삭제</button>x
+      <button onClick={onRemoveClick}>삭제</button>
       <button onClick={edit ? onEdittoto : clickEddit}>
         {edit ? "완료" : "수정"}
       </button>
