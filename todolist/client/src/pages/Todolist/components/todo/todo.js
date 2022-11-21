@@ -44,9 +44,10 @@ const Todo = ({ todo, todoList, setTodoList }) => {
   const onDelete = async () => {
     try {
       const res = await TodoApi.deleteTodo({ id: todo.id });
-
-      const todoList_d = todoList.filter((v) => v.id !== res.data.data);
-      setTodoList(todoList_d);
+      if (res.status === 200) {
+        const todoList_d = todoList.filter((v) => v.id !== res.data.data);
+        setTodoList(todoList_d);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -82,13 +83,6 @@ const Todo = ({ todo, todoList, setTodoList }) => {
   //     .catch((err) => console.log(err));
   // };
   const onUpdate = async () => {
-    /*
-    어떤값?
-    id,content,flag => 어떤값이 응답?
-    => find(id), 찾은 state의 content,flag값 수정
-
-
-    */
     if (todo.content === newTodo) {
       // alert("변한 내용이 없습니다");
       return setEdit(false);
@@ -98,28 +92,16 @@ const Todo = ({ todo, todoList, setTodoList }) => {
       content: newTodo,
       flag: todo.flag,
     };
-    // axiosInstance
-    //   .put(`/todo/${todo.id}`, data)
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       const { data } = res.data;
-    //       const newTodoList = [...todoList];
-    //       let todo = newTodoList.find((todo) => todo.id === data.id);
-    //       todo.content = data.content;
 
-    //       setTodoList(newTodoList);
-    //       setEdit(false);
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
     try {
-      await TodoApi.updateTodo({ data });
-
-      const newTodoList = [...todoList];
-      let todo = newTodoList.find((todo) => todo.id === data.id);
-      todo.content = data.content;
-      setTodoList(newTodoList);
-      setEdit(false);
+      const res = await TodoApi.updateTodo({ data });
+      if (res.status === 200) {
+        const newTodoList = [...todoList];
+        let todo = newTodoList.find((todo) => todo.id === data.id);
+        todo.content = data.content;
+        setTodoList(newTodoList);
+        setEdit(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -150,21 +132,27 @@ const Todo = ({ todo, todoList, setTodoList }) => {
       flag: !todo.flag,
     };
     try {
-      await TodoApi.updateTodo({ data });
-
-      const newTodoList = [...todoList];
-      let todo = newTodoList.find((todo) => todo.id === data.id);
-      todo.flag = data.flag;
-      setTodoList(newTodoList);
-      setEdit(false);
+      const res = await TodoApi.updateTodo({ data });
+      if (res.status === 200) {
+        const newTodoList = [...todoList];
+        let todo = newTodoList.find((todo) => todo.id === data.id);
+        todo.flag = data.flag;
+        setTodoList(newTodoList);
+        setEdit(false);
+      }
     } catch (err) {
       console.log(err);
     }
   };
   const logoutBtn = async () => {
+    const res = await AuthApi.logout();
     try {
-      TokenRepository.removeToken();
-      navigate("/");
+      console.log(res.status);
+
+      if (res.status === 201) {
+        TokenRepository.removeToken();
+        navigate("/");
+      }
     } catch (err) {
       console.log(err);
     }

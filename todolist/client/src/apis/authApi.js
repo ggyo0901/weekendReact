@@ -12,6 +12,9 @@ export const AuthApi = {
     //     //상위 예외 처리문으로 예외를 넘긴다.
     //   });
   },
+  logout: () => {
+    return axiosInstance.post(path + "/logout");
+  },
 
   signup: ({ email, password }) => {
     return axiosInstance.post(path + `/signup`, { email, password });

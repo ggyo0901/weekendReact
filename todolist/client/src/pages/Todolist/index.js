@@ -27,16 +27,19 @@ const TodoListPage = () => {
   //     })
   //     .catch((err) => console.log(err.response.data));
   // }, []);
-  useEffect(async () => {
+  useEffect(() => {
+    handler();
+  }, []);
+  const handler = async () => {
+    const res = await TodoApi.getTodo();
     try {
-      const res = await TodoApi.getTodo();
-      console.log(res);
-
-      setTodoList(res.data.data);
+      if (res.status === 200) {
+        setTodoList(res.data.data);
+      }
     } catch (err) {
       console.log(err);
     }
-  });
+  };
   return (
     <>
       {todoList.map((v) => (

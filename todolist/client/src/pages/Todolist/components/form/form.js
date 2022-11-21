@@ -37,7 +37,7 @@ const TodoForm = ({ todoList, setTodoList }) => {
   const onClickAddBtn = async () => {
     try {
       const res = await TodoApi.createTodo({ content: todo });
-      console.log(1);
+
       if (res.status === 200) {
         setTodoList([res.data.data, ...todoList]);
         setTodo("");
