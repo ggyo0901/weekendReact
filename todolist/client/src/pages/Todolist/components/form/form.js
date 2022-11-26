@@ -3,10 +3,13 @@ import { AuthApi } from "apis/authApi";
 import { TodoApi } from "apis/todoAPi";
 
 import useInput from "hooks/useinput";
+import { useDispatch } from "react-redux";
+import { addTodos } from "reducer/todo";
 
 const TodoForm = ({ todoList, setTodoList }) => {
   const [todo, onChangeTodo, setTodo] = useInput("");
-  //
+  const dispatch = useDispatch();
+  //1.
   // const onClickAddBtn = () => {
   //   /**
   //    * ? -> todo-> 성공 실패
@@ -34,6 +37,8 @@ const TodoForm = ({ todoList, setTodoList }) => {
   //     })
   //     .catch((err) => console.log(err));
   // };
+
+  //2.
   const onClickAddBtn = async () => {
     try {
       const res = await TodoApi.createTodo({ content: todo });
@@ -47,6 +52,7 @@ const TodoForm = ({ todoList, setTodoList }) => {
       console.log(err);
     }
   };
+
   return (
     <>
       <input value={todo} onChange={onChangeTodo} />

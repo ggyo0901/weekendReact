@@ -1,3 +1,5 @@
+import { Provider } from "react-redux";
+import { store } from "store/store";
 import { ThemeProvider } from "styled-components";
 import "./App.css";
 
@@ -7,10 +9,14 @@ import Router from "./routes/router";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Router />
-    </ThemeProvider>
+    <>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Router />
+        </ThemeProvider>
+      </Provider>
+    </>
   );
 }
 

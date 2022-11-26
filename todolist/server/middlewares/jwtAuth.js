@@ -1,4 +1,3 @@
-import { RefreshAuth } from "../util/refreshAuth.js";
 import passport from "passport";
 import { FailureData } from "../util/resultData.js";
 import jwt from "jsonwebtoken";
@@ -8,32 +7,24 @@ export const jwtAuth = (req, res, next) => {
     if (err || !user) {
       // refresh o jwt x
       if (req.cookies.refresh) {
-        const refreshAuth = RefreshAuth(req.cookies.refresh, req.user);
-        if (refreshAuth) {
-          return next();
-        }
-        res.status(403).json(FailureData("인증정보가 올바르지 않습니다"));
+        res.status(403).json(FailureData("인증토큰을 재발급 받으세요"));
       } else {
         // refresh x jwt x
-        res.status(403).json(FailureData("세션이 만료되었습니다"));
+        res.status(401).json(FailureData("세션이 만료되었습니다"));
       }
     }
+
     // jwt o refresh o
     if (req.cookies.refresh) {
-      const refreshAuth = RefreshAuth(req.cookies.refresh, user);
-      if (refreshAuth) {
-        return next();
-      }
-      res.status(403).json(FailureData("인증정보가 올바르지 않습니다"));
-      UserService.logout(req, res, next);
+      return next();
     }
+
     // jwt o refresh x
-    // refresh reissue
+    // refresh o
     const refresh = jwt.sign(
       { token: user.token },
       process.env.SECRET_REFRESH_TOKEN_KEY
     );
-    console.log("jwt");
     res.cookie("refresh", refresh, {
       maxAge: 14 * 24 * 60 * 60000,
       httpOnly: true,

@@ -3,8 +3,8 @@ import { axiosInstance } from "apis";
 const path = "/todo";
 
 export const TodoApi = {
-  createTodo: ({ content, flag }) => {
-    return axiosInstance.post(path + "/", { content, flag });
+  createTodo: ({ content }) => {
+    return axiosInstance.post(path + "/", { content });
   },
   getTodo: () => {
     return axiosInstance.get(path + "/");

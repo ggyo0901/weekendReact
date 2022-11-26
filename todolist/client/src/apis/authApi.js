@@ -17,6 +17,6 @@ export const AuthApi = {
   },
 
   signup: ({ email, password }) => {
-    return axiosInstance.post(path + `/signup`, { email, password });
+    return axiosInstance.post(path + `/sign`, { email, password });
   },
 };
